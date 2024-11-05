@@ -6,8 +6,8 @@ export default function Students() {
 
     const getAllStudents = () => {
         axios_client.get('/api/etudiant/etudiants')
-            .then((rep) => {
-                console.log(rep.data); // Store data in state
+            .then((response) => {
+                setListStudent(response.data);
             })
             .catch((error) => {
                 console.log('Error fetching data:', error);
@@ -34,17 +34,23 @@ export default function Students() {
                     </tr>
                 </thead>
                 <tbody>
-                    {listStudent.map((student) => (
-                        <tr key={student.id}>
-                            <td>{student.id}</td>
-                            <td>{student.nom}</td>
-                            <td>{student.prenom}</td>
-                            <td>{student.dateNaissance}</td>
-                            <td>{student.email}</td>
-                            <td>{student.telephone}</td>
-                            <td>{student.idFiliere}</td>
+                    {listStudent.length > 0 ? (
+                        listStudent.map((student) => (
+                            <tr key={student.id}>
+                                <td>{student.id}</td>
+                                <td>{student.nom}</td>
+                                <td>{student.prenom}</td>
+                                <td>{student.dateNaissance}</td>
+                                <td>{student.email}</td>
+                                <td>{student.telephone}</td>
+                                <td>{student.idFiliere}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="7" className="text-center">No Data Available</td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
         </div>
